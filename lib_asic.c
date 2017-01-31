@@ -5,9 +5,6 @@
 #include "lib_bridge.h"
 #include "lib_asic_bridge.h"
 
-/*
-#include "lib_asic_bridge.c"
-*/
 
 struct sw asic_sw;
 char asic_name[]="ASIC_SW";

@@ -3,10 +3,12 @@
 
 /* Interface for a learning bridge */
 
+#define ETHER_ALEN 6
+
 struct mac_entry {
 
-   uint8_t ether_addr[ETH_ALEN];
-   unsigned int vlan[id];
+   unsigned char  ether_addr[ETHER_ALEN];
+   unsigned int vlan_id;
 };
 
 int asic_br_add_br (int br_id); /* Creates a new bridge table */
