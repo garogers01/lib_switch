@@ -3,6 +3,7 @@
 
 #define PROTOCOL_APP 0
 #define PROTOCOL_BRIDGE 1
+#define PROTOCOL_FLOW 2
 
 struct app_msg_hdr {
 	int type;

@@ -8,6 +8,7 @@ enum {
 	MOD_SWITCH,
 	MOD_PROTOCOL,
 	MOD_COMM,
+	MOD_CLI,
 	MOD_MAX
 } MODULE_TYPE;
 
@@ -30,6 +31,7 @@ struct sw {
 	int  type; 
 	int (*print_func)(void) ;
 	int (*proto_reg_func)(int proto_id, int (*func)(void *)) ;
+        int (*halt)(void);
 	void * proto_handler[];
 };
 
@@ -41,16 +43,32 @@ struct protocol {
 	struct messages *message;
         int (*register_proto)(void *func);
 	int (*print_func)(void);
+	int (*cli_cmd)(char *);
+        int (*halt)(void);
 };
 
 struct comm {
 	char *name;
 	int  id; 
+        int (*start)(struct protocol **var);
+	int (*print_func)(void);
+        int (*halt)(void);
+};
+
+struct cli {
+	char *name;
+	int  id; 
         int (*start)(void *var);
 	int (*print_func)(void);
+        int (*halt)(void);
 };
+
 int register_sw (struct sw *sw_var);
+
 int register_proto (struct protocol *proto);
+int halt (void);
+
+#define ETHER_ALEN 6
 
 #endif
 

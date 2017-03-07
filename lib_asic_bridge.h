@@ -3,7 +3,6 @@
 
 /* Interface for a learning bridge */
 
-#define ETHER_ALEN 6
 
 struct mac_entry {
 

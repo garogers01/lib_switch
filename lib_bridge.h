@@ -14,7 +14,7 @@ enum br_msg_id {
 };
 
 struct br_msg_param {
-     int dev_hdl;
+     void *dev_hdl;
      int bridge_id;
      union {
 	     int intf_id;
@@ -25,7 +25,8 @@ struct br_msg_param {
 };
 
 struct br_device {
-	int dev_hdl;
+	void * dev_hdl;
+/* Minimal Bridge Functions */
 	int (*br_add_br) (int br_id);
 	int (*br_del_br) (int br_id);
 	int (*br_add_br_if) (int br_id, int intf_id);
@@ -33,6 +34,16 @@ struct br_device {
 	int (*br_set_age) (int br_id, int age);
 	int (*br_set_max_age) (int br_id, int max_age);
 	int (*br_dump) (int br_id);
+        int (*br_add_mac) (int br_id, int intf_id, unsigned char mac[ETHER_ALEN]);
+        int (*br_del_mac) (int br_id, int intf_id, unsigned char mac[ETHER_ALEN]);
+
+/* vlan aware Bridge Functions 
+ * return NULL if not supported
+*/
+        int (*br_add_vlan_mac) (int br_id, int intf_id, short vlan_id, unsigned char mac[ETHER_ALEN]);
+        int (*br_del_vlan_mac) (int br_id, int intf_id, short vlan_id, unsigned char mac[ETHER_ALEN]);
+        int (*br_add_vlan)(int br_id, int intf_id, short vlan_id, short tos);
+
 };
 
 #endif

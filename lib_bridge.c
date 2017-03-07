@@ -1,9 +1,11 @@
 #include <stdio.h>
-#include "app_msgs.h"
-#include "lib_bridge.h"
+#include <signal.h>
 #include "common.h"
+#include "app_msgs.h"
+#include "app_cli.h"
+#include "lib_bridge.h"
 
-struct br_device *br_devs[256];
+struct br_device *br_devs[MAX_OBJECTS];
 int br_dev_cnt = 0;
 
 int br_add_br (void * parameter)
@@ -79,7 +81,7 @@ int br_dump (void * parameter)
 
 int register_dev (void *param)
 {
-	printf("%s %d\n", __FUNCTION__, __LINE__);
+	printf("Registering a bridge %s %d\n", __FUNCTION__, __LINE__);
 	br_devs[br_dev_cnt]=param;
 	br_dev_cnt ++;
 
@@ -95,18 +97,31 @@ struct messages br_message[] = {
              {PROTOCOL_BRIDGE,BR_DUMP,br_dump},
              {PROTOCOL_BRIDGE,BR_SET_MAX_AGE,br_set_max_age}};
 
+int cli_cmd (char *cmd_str)
+{
+   printf("bridge command %s \n", cmd_str);
+
+   
+}
 
 struct protocol bridge = {
 	"BRIDGING",
 	PROTOCOL_BRIDGE,
 	1,
 	BR_MAX_MSG,
-	br_message,
+	br_message
 };
 
 int protocol_br_print()
 {
-	printf("%s %d\n",bridge.name, bridge.type);
+	printf("Print %s %d\n",bridge.name, bridge.type);
+
+   return 1;
+}
+
+int halt()
+{
+   printf("Halt %s %d\n",bridge.name, bridge.type);
 
    return 1;
 }
@@ -115,6 +130,8 @@ int init (int (*protoregister)(int, struct protocol *proto_var))
 {
     bridge.register_proto = register_dev; 
     bridge.print_func=protocol_br_print;
+    bridge.cli_cmd=cli_cmd;
+    bridge.halt=halt;
     (*protoregister) (MOD_PROTOCOL, &bridge);
     return 1;
 }

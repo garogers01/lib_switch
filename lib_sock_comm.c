@@ -1,12 +1,13 @@
 #include <unistd.h>
 #include <stdio.h>
+#include <signal.h>
 #include <string.h>
 #include <sys/socket.h>
 #include <sys/socketvar.h>
 #include <sys/errno.h>
 #include <netinet/in.h>
 #include <net/if.h>
-//#include <netinet/in_var.h>
+
 #include "common.h"
 #include "app_msgs.h"
 
@@ -14,6 +15,7 @@
 struct comm sock_comm;
 
 char sock_mod_name[]="SOCK";
+int ch_id=0;
 
 /*
 struct protocol *protocols[];
@@ -21,7 +23,7 @@ struct protocol *protocols[];
 
 int sock_comm_print()
 {
-	printf("%s %d\n",sock_comm.name, sock_comm.id);
+	printf("Socket listner %s %d\n",sock_comm.name, sock_comm.id);
 
    return 1;
 }
@@ -29,7 +31,6 @@ int sock_comm_print()
 
 int sock_comm_start (struct protocol **protocols)
 {
-    int ch_id;
 
     ch_id = fork();
     if (ch_id == 0)
@@ -91,12 +92,21 @@ int sock_comm_start (struct protocol **protocols)
     }
 }
 
+int halt ()
+{
+   printf("Halting %s\n",sock_mod_name);
+   kill(ch_id, SIGKILL);
+
+   return 1;
+}
+
 int init (int (*swregister)(int, void *))
 {
     sock_comm.name=sock_mod_name;
     sock_comm.id = 0;
     sock_comm.start = sock_comm_start;
     sock_comm.print_func = sock_comm_print;
+    sock_comm.halt = halt;
 
     printf("%s %d\n",sock_comm.name, sock_comm.id);
 

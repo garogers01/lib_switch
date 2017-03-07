@@ -1,0 +1,3 @@
+rm vhost-net
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/grogers1/dpdk/dpdk-16.07/x86_64-ivshmem-linuxapp-gcc:/home/grogers1/dpdk/dpdk-16.07/x86_64-ivshmem-linuxapp-gcc/lib/:/usr/local/lib
+./sw
