@@ -138,7 +138,8 @@ client / -- A sample client application that connects through the lib_sock_comm 
 
 Compile :
 
-lib_switch -- Type ./compile.sh
+type Make 
+
 This will build the main application sw, which loads all the dynamic libraries.  It will also build all the dynamic libraries, which are just stubs at the moment.
 
 move into the client directory and build by typing ./compile.sh
