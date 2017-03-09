@@ -102,6 +102,7 @@ void cmd_help ()
  printf ("Flow Commands : \n \
  help -- This help message \n \
  show -- Show all available information \n \
+ load -- Load rules from a file \n \
  filter -- Filter command options an actions below \n \
  Filter match \n \
  * cmd must be one of [add, del, dump] \n \
@@ -680,6 +681,33 @@ out:
 
 }
 
+void cmd_load(char *cmd)
+{
+        FILE *fp;
+        char buf[4096];
+        char *bufptr; 
+
+        printf("Load Command :%s:\n", cmd);
+
+        if (strlen(cmd) > 4) 
+        {
+             /* Open FIB rule file and pasre it */
+             if (cmd == '\0') {
+                printf("No FIB rule is found\n");
+                return;
+             }
+             fp = fopen(cmd+1, "r");
+             if (fp == NULL) {
+                printf("Unable to open FIB rule %s\n", cmd+1);
+                return;
+             }
+             while (fgets(buf, 4096, fp)!= NULL) {
+                fib_cmd_filter(buf);
+             }
+             fclose(fp);
+        }
+}
+
 void cmd_show(char *cmd)
 {
    int loop;
@@ -726,6 +754,9 @@ int cli_cmd (char *cmd_str)
    }
    else if (strncmp(cmd_str, "show",4)==0){
       cmd_show(cmd_str + 4); /* Past the show */ 
+   }
+   else if (strncmp(cmd_str, "load",4)==0){
+      cmd_load(cmd_str + 4); /* Past the show */ 
    }
    else 
       printf("flow : unknown command %s \n", cmd_str);

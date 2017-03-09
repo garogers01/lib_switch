@@ -18,7 +18,7 @@ void cmd_help (struct protocol **cli_protos)
 
    printf("Help : \n");
    printf("Global Commands : help exit quit\n");
-   printf("Available sub helps (call with 'sec # help'): \n");
+   printf("Available sub helps (call with 'sec #;help'): \n");
 
    for (loop=0;loop<MAX_OBJECTS;loop++)
    {
@@ -35,11 +35,15 @@ void run_cmd(struct protocol **cli_protos)
     char *sub_cmd;
     char *bufptr;
     int proto_id;
+    char *subcmd;
+    int x;
 
     while (1)
     {
         printf("cmd shell>");
 	fgets(buf,4096,stdin);
+        /* Remove the new line */
+        buf[strlen(buf)-1]=0x0;
         bufptr = strdup(buf);
         if (strncmp(buf,"help",4)==0)
         {
@@ -66,8 +70,6 @@ void run_cmd(struct protocol **cli_protos)
             printf("sub %d \n", proto_id);
             if (cli_protos[proto_id] != 0)
             {
-                printf("cli proto %p\n", cli_protos[proto_id]);
-                printf("cli proto name %s\n", cli_protos[proto_id]->name);
                 (* cli_protos[proto_id]->cli_cmd)(sub_cmd+3);
             }
         }

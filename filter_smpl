@@ -1,2 +1,3 @@
-sec 1;filter add dev=0 tbl=0 in-phy-port=0 in-port=0 dl-dst=6d:59:8b:bf:42:0c dl-src=00:00:cd:8d:8a:92 dl-type=0x800 nw-dst=12.16.126.217 nw-src=70.42.65.111 nw-ecn=199 nw-proto=6 tp-dst=63784 tp-src=49272 action out-port=0
-sec 1;filter add dev=0 tbl=0 in-phy-port=1 in-port=1 dl-dst=6d:59:8b:bf:42:0c dl-src=00:00:cd:8d:8a:92 dl-type=0x800 nw-dst=12.16.126.217 nw-src=70.42.65.111 nw-ecn=199 nw-proto=6 tp-dst=63784 tp-src=49272 action out-port=1
+filter add dev=0 tbl=0 in-phy-port=0 in-port=0 dl-dst=6d:59:8b:bf:42:0c dl-src=00:00:cd:8d:8a:92 dl-type=0x800 nw-dst=12.16.126.217 nw-src=70.42.65.111 nw-ecn=199 nw-proto=6 tp-dst=63784 tp-src=49272 action out-port=0
+filter add dev=0 tbl=0 in-phy-port=1 in-port=1 dl-dst=6d:59:8b:bf:42:0c dl-src=00:00:cd:8d:8a:92 dl-type=0x800 nw-dst=12.16.126.217 nw-src=70.42.65.111 nw-ecn=199 nw-proto=6 tp-dst=63784 tp-src=49272 action out-port=1
+filter add dev=0 tbl=0 in-phy-port=2 in-port=2 dl-dst=6d:59:8b:bf:42:0c dl-src=00:00:cd:8d:8a:92 dl-type=0x800 nw-dst=12.16.126.217 nw-src=70.42.65.111 nw-ecn=199 nw-proto=6 tp-dst=63784 tp-src=49272 action out-port=2
